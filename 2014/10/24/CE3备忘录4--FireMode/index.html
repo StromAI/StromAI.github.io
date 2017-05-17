@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CE3备忘录4--FireMode | StromAI&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里简单介绍FireMode的写法。 首先说明下CE3武器系统的调用结构：在CE3中当触发射击事件的时候一般来说是这样的流程，首先调用到当前武器，在武器代码中通过m_fm成员调用FireMode的方法之后，通过Fire">
+<meta name="keywords" content="Code,Game">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CE3备忘录4--FireMode">
+<meta property="og:url" content="http://yoursite.com/2014/10/24/CE3备忘录4--FireMode/index.html">
+<meta property="og:site_name" content="StromAI&#39;s blog">
+<meta property="og:description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里简单介绍FireMode的写法。 首先说明下CE3武器系统的调用结构：在CE3中当触发射击事件的时候一般来说是这样的流程，首先调用到当前武器，在武器代码中通过m_fm成员调用FireMode的方法之后，通过Fire">
+<meta property="og:updated_time" content="2017-05-17T16:00:15.248Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CE3备忘录4--FireMode">
+<meta name="twitter:description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里简单介绍FireMode的写法。 首先说明下CE3武器系统的调用结构：在CE3中当触发射击事件的时候一般来说是这样的流程，首先调用到当前武器，在武器代码中通过m_fm成员调用FireMode的方法之后，通过Fire">
+  
+    <link rel="alternate" href="/atom.xml" title="StromAI&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StromAI&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Don&#39;t worry be happy~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CE3备忘录4--FireMode" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/24/CE3备忘录4--FireMode/" class="article-date">
+  <time datetime="2014-10-23T23:08:18.000Z" itemprop="datePublished">2014-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CE3/">CE3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CE3备忘录4--FireMode
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关于备忘录：<br>这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com</p>
+<hr>
+<p>这里简单介绍FireMode的写法。</p>
+<p>首先说明下CE3武器系统的调用结构：<br>在CE3中当触发射击事件的时候一般来说是这样的流程，首先调用到当前武器，在武器代码中通过m_fm成员调用FireMode的方法之后，通过FireMode完成射击动作，发射出的弹头造成伤害。</p>
+<p>以上的这些关联均在xml文件中定义，可以在允许的范围内自由调用。</p>
+<p>接下来就说FireMode了，因为之前一直没有怎么用过所以没怎么研究。最开始使用的时候直接继承下来，然后重载要用的函数，但是实践后发现会造成一个断言失败，之后调试的结论是FireMode的每个成员函数中都有自己的内存管理方法，由于调用了<strong>this</strong>指针所以所有的子类都需要定义这一方法，以保证内存的合理使用，当然在其中还使用一个宏定义来辅助完整这一任务。不过这里确实是给我造成了一些困扰，毕竟宏很少用啊。其中代码块分别使用了两组宏定义实现了这一方法的<em>声明与定义</em>。</p>
+<p>好的~<br>接下来话不多说，咱们来看代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __MYFM_H__</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __MYFM_H__</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Single.h"</span></span></div><div class="line"><span class="comment">//这里从Single中继承下来</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CLock</span> :</span> <span class="keyword">public</span> CSingle</div><div class="line">&#123;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">typedef</span> CSingle BaseClass;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	CRY_DECLARE_GTI(CMyFM);<span class="comment">//迷之宏定义的声明部分</span></div><div class="line">	<span class="comment">//从注释来说大概是获取静态和运行时的信息</span></div><div class="line">	<span class="comment">//由于免费版源代码并没有完全开放，这里个人推测获取的信息在之后的GetMemoryUsage方法中需要使用</span></div><div class="line"></div><div class="line">	CMyFM();</div><div class="line">	<span class="keyword">virtual</span> ~CMyFM()&#123;&#125;;<span class="comment">//注意这里的虚析构函数</span></div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">GetMemoryUsage</span><span class="params">(ICrySizer * s)</span> <span class="keyword">const</span></span>;</div><div class="line">	<span class="comment">//前面说的内存管理</span></div><div class="line"></div><div class="line"></div><div class="line">	<span class="comment">//你想要重载的函数	</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="comment">//所需的成员</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
+<p>cpp的定义<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"StdAfx.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Lock.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Projectile.h"</span></span></div><div class="line"></div><div class="line">CRY_IMPLEMENT_GTI(CMyFM, CSingle);<span class="comment">//迷之宏定义的实现部分</span></div><div class="line"></div><div class="line"><span class="keyword">void</span> CMyFM::GetMemoryUsage(ICrySizer * s) <span class="keyword">const</span></div><div class="line">&#123; </div><div class="line">	s-&gt;AddObject(<span class="keyword">this</span>, <span class="keyword">sizeof</span>(*<span class="keyword">this</span>));	</div><div class="line">	BaseClass::GetInternalMemoryUsage(s);		<span class="comment">// collect memory of parent class</span></div><div class="line">&#125;</div><div class="line"><span class="comment">//内存的管理</span></div><div class="line"></div><div class="line"><span class="comment">//你所需要的的方法的实现</span></div></pre></td></tr></table></figure></p>
+<p>使用的时候需要改写使用这一FireMode的武器xml中的FireMode标签，改成在GameFactory.cpp中注册的名称即可使用，关于注册方法与Weapon的注册方法相同。<br>这样整个武器系统的编写就完成了，当然关于一些奇怪武器的编写还要了解其他的API这里就不再赘述。</p>
+<p>以上</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/24/CE3备忘录4--FireMode/" data-id="cj2t7i2zr00076cvnsiv9fm9e" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Code/">Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Game/">Game</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/10/24/游戏评测7——To-The-Moon/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          游戏评测7——To The Moon
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/10/12/Ubuntu下Sublime-Text-2的安装Fix/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Ubuntu下Sublime Text 2的安装Fix</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CE3/">CE3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-Patterns/">Design-Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Note/">Note</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Review/">Review</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Socket/">Socket</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unix/">Unix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Code/">Code</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Review/">Review</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sublime/">Sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/">Unix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Code/" style="font-size: 18.33px;">Code</a> <a href="/tags/Game/" style="font-size: 20px;">Game</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Review/" style="font-size: 16.67px;">Review</a> <a href="/tags/Software/" style="font-size: 10px;">Software</a> <a href="/tags/Sublime/" style="font-size: 11.67px;">Sublime</a> <a href="/tags/Unix/" style="font-size: 13.33px;">Unix</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/test/" style="font-size: 11.67px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/18/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/15/Unix-Note--errno-define/">Unix Note--errno define</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/20/游戏评测8——Minecraft(简评)/">游戏评测8——Minecraft(简评)</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/04/C++API设计Note/">C++API设计Note</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/01/Unix编程入门2--线程同步/">Unix编程入门2--线程同步</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 StromAI<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

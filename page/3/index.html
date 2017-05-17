@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>StromAI&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Don&apos;t worry be happy~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="StromAI&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:site_name" content="StromAI&#39;s blog">
+<meta property="og:description" content="Don&apos;t worry be happy~">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="StromAI&#39;s blog">
+<meta name="twitter:description" content="Don&apos;t worry be happy~">
+  
+    <link rel="alternate" href="/atom.xml" title="StromAI&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StromAI&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Don&#39;t worry be happy~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-ubuntu下sublime-text-2的安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/10/30/ubuntu下sublime-text-2的安装/" class="article-date">
+  <time datetime="2013-10-30T05:02:27.000Z" itemprop="datePublished">2013-10-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/10/30/ubuntu下sublime-text-2的安装/">Ubuntu下Sublime Text 2的安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为一个程序员，不会用Linux是不应该的，所以昨天搞了一个Ubuntu 12.04装在了虚拟机上，这也算是我Linux学习的开始吧。</p>
+<p>##Sublime Text 2的安装</p>
+<p>Sublime Text 是一个代码编辑器（Sublime Text 2是收费软件，但可以无限期试用），也是HTML和散文先进的文本编辑器。Sublime Text是由程序员Jon Skinner于2008年1月份所开发出来，它最初被设计为一个具有丰富扩展功能的Vim。</p>
+<p>Linux下的安装流程：</p>
+<p>###0.环境说明<br>    操作系统：Ubuntu 12.04 x32<br>    Sublime版本：2.0.2</p>
+<p>###1.下载sublime<br>百度或者google可以搜索到<a href="http://www.sublimetext.com/" target="_blank" rel="external">Sublime Text的官网</a>在Download中找到合适自己操作系统的版本进行下载，这里我下载的是<strong>Linux 32 bit</strong>。<br>下载下来以后是.bz2文件。10M多一点，不是很大。</p>
+<p>###2.解压放置</p>
+<p>网上查到的方法是这样的：</p>
+<ul>
+<li>找到目录后键入：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">tar -xvf Sublime\ Text\ 2.0.1.tar.bz2</div><div class="line">mv Sublime\ Text\ 2 /usr/lib/</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>第一行解压，第二行为移动。<br>其中的\为转义符<br>这样做是因为$PATH这个环境变量自动涵盖了/usr/lib这个目录，不用专门去修改环境变量。</p>
+<ul>
+<li>然后键入：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s /usr/lib/Sublime\ Text\ 2/sublime_text /usr/bin/sublime</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这行命令是在/usr/bin/目录下建立一个名为sublime链接，这样后面可以比较方便的用命令行启动这个编辑器。其中sublime这个名字是自行定义的，用户可以定义的更加简单方便。</p>
+<p>但是在执行tar命令时总是有问题，于是换了种方法，如下：</p>
+<p>用系统自带的Firefox下载完成后会左边栏会显示Archive Manager，可以看到下载好的<strong>Sublime Text 2</strong>,尝试后发现直接把这东西从Archive Manager拖到桌面上貌似会自动解压。<br>然后把路径切到Desktop执行mv 命令，后面的步骤与之前的相同。</p>
+<p>这样进入命令行输入Sublime即可运行。<br>打开以后是这个样子的：<br><img src="http://d.pr/i/s1jE.jpg" alt="image"></p>
+<p>###3.侧边条LaunchBar设置<br>这个到现在没有搞成功……<br>不知道具体是啥问题，留着以后解决。<br>下面是我找到的<a href="http://www.linuxidc.com/Linux/2013-01/77623.htm" target="_blank" rel="external">链接</a>，想了解的可以看看,在此感谢这篇文章的作者。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/10/30/ubuntu下sublime-text-2的安装/" data-id="cj2t7i305000u6cvnxhmw9txc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sublime/">Sublime</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/10/27/test/" class="article-date">
+  <time datetime="2013-10-27T13:16:51.000Z" itemprop="datePublished">2013-10-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/test/">test</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/10/27/test/">Test</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>单纯的测试一下……</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/10/27/test/" data-id="cj2t7i302000m6cvnunsdfkjs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-building" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/10/27/building/" class="article-date">
+  <time datetime="2013-10-27T13:03:09.000Z" itemprop="datePublished">2013-10-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/10/27/building/">Building</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这blog已经搞了好几天了，凑合能用了吧……<br>=。=但还是有很多问题，烦躁，今天就搞这么多了。<br>（话说小图标为啥又不见了……）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/10/27/building/" data-id="cj2t7i307000y6cvnaveo54qf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-my-new-post" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/10/24/my-new-post/" class="article-date">
+  <time datetime="2013-10-24T15:32:23.000Z" itemprop="datePublished">2013-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/test/">test</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/10/24/my-new-post/">my new post</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/10/24/my-new-post/" data-id="cj2t7i305000t6cvnrn6z7ftq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CE3/">CE3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-Patterns/">Design-Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Note/">Note</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Review/">Review</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Socket/">Socket</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unix/">Unix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Code/">Code</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Review/">Review</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sublime/">Sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/">Unix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Code/" style="font-size: 18.33px;">Code</a> <a href="/tags/Game/" style="font-size: 20px;">Game</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Review/" style="font-size: 16.67px;">Review</a> <a href="/tags/Software/" style="font-size: 10px;">Software</a> <a href="/tags/Sublime/" style="font-size: 11.67px;">Sublime</a> <a href="/tags/Unix/" style="font-size: 13.33px;">Unix</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/test/" style="font-size: 11.67px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/18/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/15/Unix-Note--errno-define/">Unix Note--errno define</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/20/游戏评测8——Minecraft(简评)/">游戏评测8——Minecraft(简评)</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/04/C++API设计Note/">C++API设计Note</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/01/Unix编程入门2--线程同步/">Unix编程入门2--线程同步</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 StromAI<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

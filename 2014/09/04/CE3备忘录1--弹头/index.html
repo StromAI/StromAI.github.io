@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CE3备忘录1--弹头创建 | StromAI&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里介绍在CE3中子弹弹头的创建及使用。 首先CE3中的弹头的创建一般基于抛射物，即继承自CProjectile，当然根据需要有时会用到多重继承调用其他的资源，不过这里作为基本的介绍所以不予考虑。 这里的环境为wind">
+<meta name="keywords" content="Code,Game">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CE3备忘录1--弹头创建">
+<meta property="og:url" content="http://yoursite.com/2014/09/04/CE3备忘录1--弹头/index.html">
+<meta property="og:site_name" content="StromAI&#39;s blog">
+<meta property="og:description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里介绍在CE3中子弹弹头的创建及使用。 首先CE3中的弹头的创建一般基于抛射物，即继承自CProjectile，当然根据需要有时会用到多重继承调用其他的资源，不过这里作为基本的介绍所以不予考虑。 这里的环境为wind">
+<meta property="og:updated_time" content="2017-05-17T16:00:15.248Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CE3备忘录1--弹头创建">
+<meta name="twitter:description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里介绍在CE3中子弹弹头的创建及使用。 首先CE3中的弹头的创建一般基于抛射物，即继承自CProjectile，当然根据需要有时会用到多重继承调用其他的资源，不过这里作为基本的介绍所以不予考虑。 这里的环境为wind">
+  
+    <link rel="alternate" href="/atom.xml" title="StromAI&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StromAI&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Don&#39;t worry be happy~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CE3备忘录1--弹头" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/09/04/CE3备忘录1--弹头/" class="article-date">
+  <time datetime="2014-09-04T13:20:17.000Z" itemprop="datePublished">2014-09-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CE3/">CE3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CE3备忘录1--弹头创建
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关于备忘录：<br>这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com</p>
+<hr>
+<p>这里介绍在CE3中子弹弹头的创建及使用。</p>
+<p>首先CE3中的弹头的创建一般基于抛射物，即继承自<em>CProjectile</em>，当然根据需要有时会用到多重继承调用其他的资源，不过这里作为基本的介绍所以不予考虑。</p>
+<p>这里的环境为windows7 x64下的VS2012</p>
+<p>这里我们以一个可以为目标物体造成固定伤害的弹头为例子介绍：</p>
+<p>首先在VS的资源管理器中的/CryGameSDK/Item Files/Weapon Files/Projectiles目录下创建文件HitBullet.h和HitBullet.cpp</p>
+<p>###打开HitBullet.h编辑如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _HITBULLET_H_</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _HITBULLET_H_</span></div><div class="line"><span class="comment">//保证文件只编译一次这里很重要希望大家注意，之后我就不再说明了</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"StdAfx.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Projectile.h"</span></span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CHitBullet</span> :</span> <span class="keyword">public</span> CProjectile</div><div class="line">&#123;</div><div class="line"> </div><div class="line">	<span class="keyword">typedef</span> CProjectile BaseClass;<span class="comment">//方便使用基类资源，不过这里我们用不到实际操作时可以删掉这行</span></div><div class="line">	 </div><div class="line"><span class="keyword">public</span>:</div><div class="line"></div><div class="line">	CHitBullet();</div><div class="line">	~CHitBullet();</div><div class="line"> </div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">HandleEvent</span><span class="params">(<span class="keyword">const</span> SGameObjectEvent &amp;)</span></span>;</div><div class="line">	<span class="comment">//事件处理函数，继承自CProjectile，由于该类可能被作为基类调用故声明为虚函数</span></div><div class="line">	<span class="comment">//在这里我们通过重写这一函数来实现效果</span></div><div class="line"> </div><div class="line"><span class="keyword">private</span>:</div><div class="line"> </div><div class="line">	<span class="keyword">float</span> damage;</div><div class="line">	<span class="comment">//手动设置伤害值，这里通过函数调用伤害其实可以从武器的xml中获得</span></div><div class="line">	<span class="comment">//这里为了方便直接设置</span></div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<p>###保存后打开HitBullet.cpp</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">#include "StdAfx.h"</div><div class="line">#include "HitBullet.h"</div><div class="line">#include "Game.h"</div><div class="line">#include "GameRules.h"</div><div class="line">#include "Actor.h"</div><div class="line"> </div><div class="line">CHitBullet::CHitBullet()</div><div class="line">	：damage(100) //将伤害初始化</div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">CHitBullet::~CHitBullet()</div><div class="line">&#123;</div><div class="line"> </div><div class="line">&#125;</div><div class="line"> </div><div class="line">void CHitBullet::HandleEvent(const SGameObjectEvent &amp;event)</div><div class="line">&#123;</div><div class="line">	CProjectile::HandleEvent(event);    //先调用父类的HandleEvent完成必要操作</div><div class="line">	if(event.event == eGFE_OnCollision)    //判断实体事件是否为碰撞事件,若不是则不进行操作</div><div class="line">	&#123;</div><div class="line">		EventPhysCollision *pCollision = (EventPhysCollision*)(event.ptr);  //强制转换类型,在CE里很常见</div><div class="line">		if(!pCollision)    //如果指针为空则不进行操作</div><div class="line">			return;</div><div class="line">		IEntity *pTarget=pCollision-&gt;iForeignData[1] ==PHYS_FOREIGN_ID_ENTITY ? (IEntity*)pCollision-&gt;pForeignData[1] : 0;    //获取与弹头发生碰撞的实体.(PHYS_FOREIGN_ID_ENTITY表明是实体)</div><div class="line"> </div><div class="line">		if(pTarget)	//如果实体获取成功进行如下操作</div><div class="line">		&#123;</div><div class="line">			CActor *pActor=(CActor*)g_pGame-&gt;GetIGameFramework()-&gt;GetIActorSystem()-&gt;GetActor(pTarget-&gt;GetId());    //获取角色</div><div class="line">			EntityId targetId=pTarget-&gt;GetId();</div><div class="line">			CryLogAlways(pTarget-&gt;GetClass()-&gt;GetName());    //CryLogAlwasy是用的非常多的Debug函数,用法跟printf一样.默认类型为string,%d,%f啥的你都懂的</div><div class="line">			HitInfo hitInfo(m_ownerId ? m_ownerId : m_hostId, targetId, m_weaponId,</div><div class="line">				damage, 0.0f, 0, pCollision-&gt;partid[1],</div><div class="line">				m_hitTypeId, pCollision-&gt;pt, Vec3(0,0,1), pCollision-&gt;n);    //Hitinfo是个结构体,定义了子弹(或别的什么)造成的伤害的各种参数</div><div class="line">			hitInfo.knocksDown=false;</div><div class="line">			hitInfo.knocksDownLeg=false;</div><div class="line">			hitInfo.remote = IsRemote();</div><div class="line">			hitInfo.projectileId = GetEntityId();</div><div class="line">			hitInfo.bulletType = m_pAmmoParams-&gt;bulletType;</div><div class="line">			hitInfo.knocksDown = CheckAnyProjectileFlags(ePFlag_knocksTarget) &amp;&amp; ( damage &gt; m_minDamageForKnockDown );</div><div class="line">			hitInfo.knocksDownLeg = m_chanceToKnockDownLeg&gt;0 &amp;&amp; damage&gt;m_minDamageForKnockDownLeg &amp;&amp; m_chanceToKnockDownLeg&gt;(int)Random(100);</div><div class="line">			hitInfo.penetrationCount = 0;</div><div class="line">			hitInfo.hitViaProxy = CheckAnyProjectileFlags(ePFlag_firedViaProxy);</div><div class="line">			hitInfo.aimed = CheckAnyProjectileFlags(ePFlag_aimedShot);    //上面一长串都是初始化hitinfo里的玩意,这些记住就好,记不住就直接复制粘贴...</div><div class="line">			g_pGame-&gt;GetGameRules()-&gt;ClientHit(hitInfo);    //处理这个伤害事件</div><div class="line">		&#125;</div><div class="line">		Destroy();    //销毁弹头.</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述内容完成后，我们武器本体代码就完成了，接下来我们将新建的弹头加入到武器系统中</p>
+<p>打开/CryGameSDK/Item Files/Weapon Files下的WeaponSystem.cpp</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"StdAfx.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Game.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;IEntitySystem.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Rocket.h"</span></span></div><div class="line">...<span class="comment">//省略一部分</span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HitBullet.h"</span><span class="comment">//包含武器的头文件</span></span></div><div class="line"> </div><div class="line">...<span class="comment">//省略一部分</span></div><div class="line"> </div><div class="line">CWeaponSystem::CWeaponSystem(CGame *pGame, ISystem *pSystem)</div><div class="line">...<span class="comment">//省略初始化</span></div><div class="line">&#123;</div><div class="line">	...<span class="comment">//省略一部分</span></div><div class="line"> </div><div class="line">	<span class="comment">// register projectile classes here</span></div><div class="line">	REGISTER_PROJECTILE(Projectile, CProjectile);</div><div class="line">	REGISTER_PROJECTILE(Bullet, CBullet);</div><div class="line">	REGISTER_PROJECTILE(KVoltBullet, CKVoltBullet);</div><div class="line">	REGISTER_PROJECTILE(Rocket, CRocket);</div><div class="line">	REGISTER_PROJECTILE(HomingMissile, CHomingMissile);</div><div class="line">	REGISTER_PROJECTILE(C4Projectile, CC4Projectile); </div><div class="line">	REGISTER_PROJECTILE(Chaff, CChaff);</div><div class="line">	...<span class="comment">//省略一部分</span></div><div class="line">	REGISTER_PROJECTILE(HitBullet, CHitBullet);<span class="comment">//将刚才写好的弹头类在这里注册，其他的地方不用管，这样就将写好的弹头注册进了武器系统</span></div><div class="line"> </div><div class="line"> </div><div class="line">	m_pPrecache = gEnv-&gt;pConsole-&gt;GetCVar(<span class="string">"i_precache"</span>);</div><div class="line"> </div><div class="line">	CBullet::EntityClass = gEnv-&gt;pEntitySystem-&gt;GetClassRegistry()-&gt;FindClass(<span class="string">"Bullet"</span>);</div><div class="line"> </div><div class="line">	m_pGame-&gt;GetIGameFramework()-&gt;GetILevelSystem()-&gt;AddListener(<span class="keyword">this</span>);</div><div class="line"> </div><div class="line">	m_linkedProjectiles.reserve(LINKED_PROJ_MAP_RESERVE);</div><div class="line"> </div><div class="line">	m_freePoolHandlers.insert(TWeaponComponentPoolFreeFunctions::value_type(CMelee::GetWeaponComponentType(), &amp;FreeWeaponComponentPool&lt;CMelee, CMelee&gt;));</div><div class="line"> </div><div class="line">	m_listenersLock = <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">...<span class="comment">//省略其它成员函数</span></div></pre></td></tr></table></figure>
+<p>之后在CE3目录下的GameSDK\Scripts\Entities\Items\XML\Ammo中新建文件HitBullet.xml<br>打开后拷贝该目录下的RifleBullet.xml中的内容</p>
+<pre>
+    <code>
+        &lt;ammo name="HitBullet" class="HitBullet">
+        &lt;!--将第一行改为这样-->
+        ...&lt;!--略-->
+    </code>
+</pre>
+
+<p>接着新建一种使用该弹头的武器，我们一Rifle为模板改动<br>在GameSDK\Scripts\Entities\Items\XML\Weapons中新建文件HitBullet.xml<br>打开后拷贝该目录下的Rifle.xml中的内容</p>
+<pre>
+    <code>
+    &lt;item name="HitBullet" class="HitBullet" category="secondary" priority="13" weaponParams="1">
+      &lt;params>
+        &lt;param name="display_name" value="@mp_eHitBullet" />
+           ...&lt;!--略-->
+      &lt;/params>
+        ...&lt;!--略-->  
+      &lt;ammos>
+        &lt;ammo name="HitBullet" extra="1" amount="1" minAmmo="1" capacity="0" GAME="SP" />&lt;!--改动-->
+        &lt;ammo name="HitBullet" extra="45" amount="9" capacity="45" GAME="MP" />&lt;!--改动-->
+      
+      &lt;firemodes>
+        &lt;firemode type="default">
+          &lt;fire>
+            &lt;param name="hit_type" value="RifleBullet" />
+            &lt;param name="ammo_type" value="HitBullet" />&lt;!--改动-->
+            ...&lt;!--略-->
+          &lt;/fire>
+          ...&lt;!--略-->
+    </code>
+</pre>
+
+
+<p>之后编译运行就可以在边栏看到武器了，添加后即可使用。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/09/04/CE3备忘录1--弹头/" data-id="cj2t7i2zl00026cvnoyhl226b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Code/">Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Game/">Game</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/09/11/CE3备忘录2--枪/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CE3备忘录2--枪械创建
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/09/04/游戏评测5——Trine2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">游戏评测5——Trine2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CE3/">CE3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-Patterns/">Design-Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Note/">Note</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Review/">Review</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Socket/">Socket</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unix/">Unix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Code/">Code</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Review/">Review</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sublime/">Sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/">Unix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Code/" style="font-size: 18.33px;">Code</a> <a href="/tags/Game/" style="font-size: 20px;">Game</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Review/" style="font-size: 16.67px;">Review</a> <a href="/tags/Software/" style="font-size: 10px;">Software</a> <a href="/tags/Sublime/" style="font-size: 11.67px;">Sublime</a> <a href="/tags/Unix/" style="font-size: 13.33px;">Unix</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/test/" style="font-size: 11.67px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/18/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/15/Unix-Note--errno-define/">Unix Note--errno define</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/20/游戏评测8——Minecraft(简评)/">游戏评测8——Minecraft(简评)</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/04/C++API设计Note/">C++API设计Note</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/01/Unix编程入门2--线程同步/">Unix编程入门2--线程同步</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 StromAI<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

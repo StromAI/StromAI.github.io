@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Ubuntu下Sublime Text 2的安装Fix | StromAI&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="貌似在很久以前写过一篇ST安装的文档，然后在最后的启动器设置的时候失败了，之后我在使用的时候解决了这个问题，在这里简单说一下。  当然,之前的启动器如果可以用的话可能涉及到系统神马的问题？这里不是很懂，下面是我最后成功时的配置: 与之前一样，在/usr/share/applications目录下新建文档，命名为sublime.desktop 之后编辑内容如下：1234567891011121314">
+<meta name="keywords" content="Linux,Sublime">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu下Sublime Text 2的安装Fix">
+<meta property="og:url" content="http://yoursite.com/2014/10/12/Ubuntu下Sublime-Text-2的安装Fix/index.html">
+<meta property="og:site_name" content="StromAI&#39;s blog">
+<meta property="og:description" content="貌似在很久以前写过一篇ST安装的文档，然后在最后的启动器设置的时候失败了，之后我在使用的时候解决了这个问题，在这里简单说一下。  当然,之前的启动器如果可以用的话可能涉及到系统神马的问题？这里不是很懂，下面是我最后成功时的配置: 与之前一样，在/usr/share/applications目录下新建文档，命名为sublime.desktop 之后编辑内容如下：1234567891011121314">
+<meta property="og:image" content="http://stromaiblog.qiniudn.com/Screenshot%20from%202014-09-12%2021_40_10.png">
+<meta property="og:updated_time" content="2017-05-17T16:00:15.249Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu下Sublime Text 2的安装Fix">
+<meta name="twitter:description" content="貌似在很久以前写过一篇ST安装的文档，然后在最后的启动器设置的时候失败了，之后我在使用的时候解决了这个问题，在这里简单说一下。  当然,之前的启动器如果可以用的话可能涉及到系统神马的问题？这里不是很懂，下面是我最后成功时的配置: 与之前一样，在/usr/share/applications目录下新建文档，命名为sublime.desktop 之后编辑内容如下：1234567891011121314">
+<meta name="twitter:image" content="http://stromaiblog.qiniudn.com/Screenshot%20from%202014-09-12%2021_40_10.png">
+  
+    <link rel="alternate" href="/atom.xml" title="StromAI&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StromAI&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Don&#39;t worry be happy~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Ubuntu下Sublime-Text-2的安装Fix" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/12/Ubuntu下Sublime-Text-2的安装Fix/" class="article-date">
+  <time datetime="2014-10-12T00:06:09.000Z" itemprop="datePublished">2014-10-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu下Sublime Text 2的安装Fix
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>貌似在很久以前写过一篇ST安装的文档，然后在最后的启动器设置的时候失败了，之后我在使用的时候解决了这个问题，在这里简单说一下。</p>
+<hr>
+<p>当然,之前的启动器如果可以用的话可能涉及到系统神马的问题？这里不是很懂，下面是我最后成功时的配置:</p>
+<p>与之前一样，在<strong>/usr/share/applications</strong>目录下新建文档，命名为<strong>sublime.desktop</strong></p>
+<p>之后编辑内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">[Desktop Entry]</div><div class="line">Version=1.0</div><div class="line">Type=Application</div><div class="line">Name=Sublime Text</div><div class="line">GenericName=Text Editor</div><div class="line">Comment=Sophisticated text editor for code, markup and prose</div><div class="line">Exec=sublime %F</div><div class="line">Icon=/usr/lib/Sublime Text 2/Icon/sublime.png</div><div class="line">Terminal=false</div><div class="line">MimeType=text/plain;</div><div class="line">Categories=TextEditor;Development;</div><div class="line">StartupNotify=true</div><div class="line">Actions=Window;Document;</div><div class="line"> </div><div class="line">[Desktop Action Window]</div><div class="line">Name=New Window</div><div class="line">Exec=sublime -n</div><div class="line">OnlyShowIn=Unity;</div><div class="line"> </div><div class="line">[Desktop Action Document]</div><div class="line">Name=New File</div><div class="line">Exec=sublime --command new_file</div><div class="line">OnlyShowIn=Unity;</div></pre></td></tr></table></figure></p>
+<p>具体的细节我就不作说明了，需要注意的几点是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Name:代表该应用的名字</div><div class="line">Icon:代表图标所在路径(当然我们可以根据这点来改变图标，搜索相关内容既可获取一些更加好看图标以更换)</div><div class="line">Exec:内容为应用的路径以及启动参数(这里由于我已经将sublime的路径加入环境变量，所以可以直接使用)</div></pre></td></tr></table></figure></p>
+<p>关于更加具体的使用方法网络上有可获取的资源供大家参考，但是当时忘记保存网址了所以……这里没办法给出链接了<br>关于更换图标的问题：由于网络上获取的资源可能有格式的问题，这里提供给大家一个图片格式在线转换的<a href="http://iconverticons.com/online/" target="_blank" rel="external">网站</a></p>
+<p>当然关于sublime的设置还有很多可以说的地方，这里我就不一一列举了，推荐给大家一个不错的<a href="http://lucifr.com/2011/08/31/sublime-text-2-tricks-and-tips/" target="_blank" rel="external">链接</a>里面的东西较为详细。包括主题和快捷操作什么的。</p>
+<p>这是我配置完成的效果：<br><img src="http://stromaiblog.qiniudn.com/Screenshot%20from%202014-09-12%2021_40_10.png" alt="image"></p>
+<p>一激动手滑敲错了点东西也没管就截图了，啊，大家就当没看到= =</p>
+<p>最后附上Sublime Text的一些快捷操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">Ctrl+Shift+P：打开命令面板</div><div class="line">Ctrl+P：搜索项目中的文件</div><div class="line">Ctrl+G：跳转到第几行</div><div class="line">Ctrl+W：关闭当前打开文件</div><div class="line">Ctrl+Shift+W：关闭所有打开文件</div><div class="line">Ctrl+Shift+V：粘贴并格式化</div><div class="line">Ctrl+D：选择单词，重复可增加选择下一个相同的单词</div><div class="line">Ctrl+L：选择行，重复可依次增加选择下一行</div><div class="line">Ctrl+Shift+L：选择多行</div><div class="line">Ctrl+Shift+Enter：在当前行前插入新行</div><div class="line">Ctrl+X：删除当前行</div><div class="line">Ctrl+M：跳转到对应括号</div><div class="line">Ctrl+U：软撤销，撤销光标位置</div><div class="line">Ctrl+J：选择标签内容</div><div class="line">Ctrl+F：查找内容</div><div class="line">Ctrl+Shift+F：查找并替换</div><div class="line">Ctrl+H：替换</div><div class="line">Ctrl+R：前往 method</div><div class="line">Ctrl+N：新建窗口</div><div class="line">Ctrl+K+B：开关侧栏</div><div class="line">Ctrl+Shift+M：选中当前括号内容，重复可选着括号本身</div><div class="line">Ctrl+F2：设置/删除标记</div><div class="line">Ctrl+/：注释当前行</div><div class="line">Ctrl+Shift+/：当前位置插入注释</div><div class="line">Ctrl+Alt+/：块注释，并Focus到首行，写注释说明用的</div><div class="line">Ctrl+Shift+A：选择当前标签前后，修改标签用的</div><div class="line">F11：全屏</div><div class="line">Shift+F11：全屏免打扰模式，只编辑当前文件</div><div class="line">Alt+F3：选择所有相同的词</div><div class="line">Alt+.：闭合标签</div><div class="line">Alt+Shift+数字：分屏显示</div><div class="line">Alt+数字：切换打开第N个文件</div><div class="line">Shift+右键拖动：光标多不，用来更改或插入列内容</div><div class="line">鼠标的前进后退键可切换Tab文件</div><div class="line">按Ctrl，依次点击或选取，可需要编辑的多个位置</div><div class="line">按Ctrl+Shift+上下键，可替换行</div></pre></td></tr></table></figure></p>
+<p>就这样</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/12/Ubuntu下Sublime-Text-2的安装Fix/" data-id="cj2t7i2zv000c6cvnht9o5awo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sublime/">Sublime</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/10/24/CE3备忘录4--FireMode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CE3备忘录4--FireMode
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/09/20/Unix编程入门1--ls简单实现及分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unix编程入门1--ls简单实现及分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CE3/">CE3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-Patterns/">Design-Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Note/">Note</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Review/">Review</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Socket/">Socket</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unix/">Unix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Code/">Code</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Review/">Review</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sublime/">Sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/">Unix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Code/" style="font-size: 18.33px;">Code</a> <a href="/tags/Game/" style="font-size: 20px;">Game</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Review/" style="font-size: 16.67px;">Review</a> <a href="/tags/Software/" style="font-size: 10px;">Software</a> <a href="/tags/Sublime/" style="font-size: 11.67px;">Sublime</a> <a href="/tags/Unix/" style="font-size: 13.33px;">Unix</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/test/" style="font-size: 11.67px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/18/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/15/Unix-Note--errno-define/">Unix Note--errno define</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/20/游戏评测8——Minecraft(简评)/">游戏评测8——Minecraft(简评)</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/04/C++API设计Note/">C++API设计Note</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/01/Unix编程入门2--线程同步/">Unix编程入门2--线程同步</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 StromAI<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>winsock编程（1）——基于Tcp的Echo | StromAI&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近整理一下之前写过的一些东西，就从这里开始吧~ 服务端结构：1.使用socket函数获取套接字12echo_soc = socket(AF_INET,SOCK_STREAM,0);//从socket的库里随机获取，两次调用相同程序可能会得到相同的套接字 echo_soc的值可以看做服务器端打开的一个通道。 2.使用bind函数将一本地地址与套接口捆绑12result = bind(echo_so">
+<meta name="keywords" content="Code,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="winsock编程（1）——基于Tcp的Echo">
+<meta property="og:url" content="http://yoursite.com/2014/01/25/winsock编程（1）——基于tcp的echo/index.html">
+<meta property="og:site_name" content="StromAI&#39;s blog">
+<meta property="og:description" content="最近整理一下之前写过的一些东西，就从这里开始吧~ 服务端结构：1.使用socket函数获取套接字12echo_soc = socket(AF_INET,SOCK_STREAM,0);//从socket的库里随机获取，两次调用相同程序可能会得到相同的套接字 echo_soc的值可以看做服务器端打开的一个通道。 2.使用bind函数将一本地地址与套接口捆绑12result = bind(echo_so">
+<meta property="og:image" content="http://d.pr/i/kkVo.jpg">
+<meta property="og:updated_time" content="2017-05-17T16:00:15.250Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="winsock编程（1）——基于Tcp的Echo">
+<meta name="twitter:description" content="最近整理一下之前写过的一些东西，就从这里开始吧~ 服务端结构：1.使用socket函数获取套接字12echo_soc = socket(AF_INET,SOCK_STREAM,0);//从socket的库里随机获取，两次调用相同程序可能会得到相同的套接字 echo_soc的值可以看做服务器端打开的一个通道。 2.使用bind函数将一本地地址与套接口捆绑12result = bind(echo_so">
+<meta name="twitter:image" content="http://d.pr/i/kkVo.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="StromAI&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StromAI&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Don&#39;t worry be happy~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-winsock编程（1）——基于tcp的echo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/01/25/winsock编程（1）——基于tcp的echo/" class="article-date">
+  <time datetime="2014-01-25T09:00:17.000Z" itemprop="datePublished">2014-01-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Socket/">Socket</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      winsock编程（1）——基于Tcp的Echo
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近整理一下之前写过的一些东西，就从这里开始吧~<br><img src="http://d.pr/i/kkVo.jpg" alt="image"></p>
+<h2 id="服务端结构："><a href="#服务端结构：" class="headerlink" title="服务端结构："></a>服务端结构：</h2><h3 id="1-使用socket函数获取套接字"><a href="#1-使用socket函数获取套接字" class="headerlink" title="1.使用socket函数获取套接字"></a>1.使用socket函数获取套接字</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo_soc = socket(AF_INET,SOCK_STREAM,<span class="number">0</span>);</div><div class="line"><span class="comment">//从socket的库里随机获取，两次调用相同程序可能会得到相同的套接字</span></div></pre></td></tr></table></figure>
+<p>echo_soc的值可以看做服务器端打开的一个<strong>通道</strong>。</p>
+<h3 id="2-使用bind函数将一本地地址与套接口捆绑"><a href="#2-使用bind函数将一本地地址与套接口捆绑" class="headerlink" title="2.使用bind函数将一本地地址与套接口捆绑"></a>2.使用bind函数将一本地地址与套接口捆绑</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">result = bind(echo_soc,( struct sockaddr*)&amp;serv_addr,<span class="keyword">sizeof</span> (serv_addr));</div><div class="line"><span class="comment">//当result = SOCKET_ERROR时，绑定出现错误，退出程序</span></div></pre></td></tr></table></figure>
+<h3 id="3-listen监听端口"><a href="#3-listen监听端口" class="headerlink" title="3.listen监听端口"></a>3.listen监听端口</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">listen(echo_soc, SOMAXCONN);</div><div class="line"><span class="comment">//这里SOMAXCONN为最大合理值（不太清楚啥意思）</span></div></pre></td></tr></table></figure>
+<p><strong>附：</strong></p>
+<blockquote>
+<ul>
+<li>msdn原文第二个参数:</li>
+<li>Maximum length of the queue of pending connections. If set to SOMAXCONN, the underlying service provider responsible for socket s will set the backlog to a maximum reasonable value. There is no standard provision to obtain the actual backlog value.</li>
+</ul>
+</blockquote>
+<h3 id="4-监听开始后服务端启动"><a href="#4-监听开始后服务端启动" class="headerlink" title="4.监听开始后服务端启动"></a>4.监听开始后服务端启动</h3><p>通过accept函数接受套接字用recv和send函数收发数据<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">&#123;</div><div class="line">    acpt_soc = accept(echo_soc,( struct sockaddr*)&amp;clnt_addr,&amp;addr_len);</div><div class="line">     <span class="comment">//ip在clnt_addr中存储？</span></div><div class="line">     <span class="keyword">if</span>(acpt_soc == INVALID_SOCKET)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>( <span class="string">"[Echo Sever] accept error: %d\n"</span> ,WSAGetLastError());</div><div class="line">         <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    result = recv(acpt_soc, recv_buf, ECHO_BUF_SIZE,<span class="number">0</span>);</div><div class="line">     <span class="keyword">if</span>(result &gt; <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        recv_buf[result] = <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>( <span class="string">"[Echo Sever] receives: \"%s\",from %s\r\n"</span> ,</div><div class="line">            recv_buf, inet_ntoa(clnt_addr.sin_addr));</div><div class="line"> </div><div class="line">        result = send(acpt_soc, recv_buf, result,<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    closesocket(acpt_soc);</div><div class="line">&#125;</div><div class="line"><span class="comment">//while（1）死循环持续接受客户端的套接字,当接收成功时打印收到信息与客户端ip地址，然后用send发送收到的信息。</span></div></pre></td></tr></table></figure></p>
+<p>关于服务端先到这里= =</p>
+<p>下面是服务端完整源码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;winsock2.h&gt;</span></span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">"ws2_32"</span>)</span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ECHO_DEF_PORT 7</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ECHO_BUF_SIZE 256</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> **argv)</span></span></div><div class="line">&#123;</div><div class="line">	WSADATA wsa_data;</div><div class="line">	SOCKET echo_soc = <span class="number">0</span>,</div><div class="line">		    acpt_soc = <span class="number">0</span>;</div><div class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">serv_addr</span>,</span></div><div class="line">			<span class="title">clnt_addr</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> port = ECHO_DEF_PORT;</div><div class="line">	<span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> addr_len = <span class="keyword">sizeof</span>(struct sockaddr_in);</div><div class="line">	<span class="keyword">char</span> recv_buf[ECHO_BUF_SIZE];</div><div class="line"> </div><div class="line">	<span class="keyword">if</span>(argc == <span class="number">2</span>)</div><div class="line">		port = atoi(argv[<span class="number">1</span>]);</div><div class="line"> </div><div class="line">	WSAStartup(MAKEWORD(<span class="number">2</span>,<span class="number">2</span>),&amp;wsa_data);</div><div class="line">	echo_soc = socket(AF_INET,SOCK_STREAM,<span class="number">0</span>);</div><div class="line"></div><div class="line">	serv_addr.sin_family = AF_INET;</div><div class="line">	serv_addr.sin_port = htons(port);</div><div class="line">	serv_addr.sin_addr.s_addr = INADDR_ANY;</div><div class="line"></div><div class="line">	result = bind(echo_soc,(struct sockaddr*)&amp;serv_addr,<span class="keyword">sizeof</span>(serv_addr));</div><div class="line">	<span class="keyword">if</span>(result == SOCKET_ERROR)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"[Echo Sever] bind error: %d\n"</span>, WSAGetLastError());</div><div class="line">		closesocket(echo_soc);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line"> </div><div class="line">	listen(echo_soc, SOMAXCONN);</div><div class="line"> </div><div class="line">	<span class="built_in">printf</span>(<span class="string">"[Echo Sever] is running ……\n"</span>);</div><div class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">	&#123;</div><div class="line">		acpt_soc = accept(echo_soc,(struct sockaddr*)&amp;clnt_addr,&amp;addr_len);</div><div class="line">		<span class="keyword">if</span>(acpt_soc == INVALID_SOCKET)</div><div class="line">		&#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"[Echo Sever] accept error: %d\n"</span>,WSAGetLastError());</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line"> </div><div class="line">		result = recv(acpt_soc, recv_buf, ECHO_BUF_SIZE,<span class="number">0</span>);</div><div class="line">		<span class="keyword">if</span>(result &gt; <span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			recv_buf[result] = <span class="number">0</span>;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"[Echo Sever] receives: \"%s\",from %s\r\n"</span>,</div><div class="line">				recv_buf, inet_ntoa(clnt_addr.sin_addr));</div><div class="line"></div><div class="line">			result = send(acpt_soc, recv_buf, result,<span class="number">0</span>);</div><div class="line">		&#125;</div><div class="line">		closesocket(acpt_soc);</div><div class="line">	&#125;</div><div class="line">	closesocket(acpt_soc);</div><div class="line">	WSACleanup();</div><div class="line"> </div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="客户端结构："><a href="#客户端结构：" class="headerlink" title="客户端结构："></a>客户端结构：</h2><h3 id="1-使用socket函数获取套接字-1"><a href="#1-使用socket函数获取套接字-1" class="headerlink" title="1.使用socket函数获取套接字"></a>1.使用socket函数获取套接字</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo_soc = socket(AF_INET,SOCK_STREAM,<span class="number">0</span>);</div></pre></td></tr></table></figure>
+<h3 id="2-使用connect函数与服务器进行连接"><a href="#2-使用connect函数与服务器进行连接" class="headerlink" title="2.使用connect函数与服务器进行连接"></a>2.使用connect函数与服务器进行连接</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">result = connect(echo_soc,( struct sockaddr *)&amp;serv_addr,<span class="keyword">sizeof</span> (serv_addr));</div><div class="line"><span class="comment">//result为0时连接成功</span></div></pre></td></tr></table></figure>
+<p><strong>附：</strong></p>
+<blockquote>
+<ul>
+<li>第二个参数为一结构体指针其中包含服务器的ip地址端口号等信息，在本程序中端口号在宏定义中确定，ip地址从命令行获得。</li>
+</ul>
+</blockquote>
+<h3 id="3-使用send与recv函数进行数据收发"><a href="#3-使用send与recv函数进行数据收发" class="headerlink" title="3.使用send与recv函数进行数据收发"></a>3.使用send与recv函数进行数据收发</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">result = send(echo_soc,test_data,send_len,<span class="number">0</span>);</div><div class="line">result = recv(echo_soc,recv_buf,ECHO_BUF_SIZE,<span class="number">0</span>);</div></pre></td></tr></table></figure>
+<p><strong>附：</strong><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(result &gt; <span class="number">0</span>)&#123;</div><div class="line">	recv_buf[result] = <span class="number">0</span>;</div><div class="line">	<span class="built_in">printf</span>( <span class="string">"[ECHO Client] receives: \"%s\"\r\n"</span> ,recv_buf);</div><div class="line">&#125;   </div><div class="line"><span class="keyword">else</span></div><div class="line">	<span class="built_in">printf</span>( <span class="string">"[ECHO Client] error: %d.\"\r\n"</span> ,WSAGetLastError());</div><div class="line"><span class="comment">//result在后续函数中作为判断条件，大于0说明成功收发send、recv函数成功执行，则打印数据。</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>最后关闭套接字，结束winsock资源既结束。</li>
+</ul>
+<p>下面是客户端完整源码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;WINSOCK2.H&gt;</span></span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">"ws2_32"</span>)<span class="comment">//winsock使用的函数库</span></span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ECHO_DEF_PORT   7<span class="comment">//连接的默认端口</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ECHO_BUF_SIZE 256<span class="comment">//缓冲区大小</span></span></div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</div><div class="line"> </div><div class="line">    WSADATA wsa_data;</div><div class="line">    SOCKET echo_soc = <span class="number">0</span>;<span class="comment">//socket句柄</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">serv_addr</span>;</span><span class="comment">//服务器地址</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> port = ECHO_DEF_PORT;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>, send_len = <span class="number">0</span>;</div><div class="line">    <span class="keyword">char</span> *test_data = <span class="string">"Hello World!"</span>, recv_buf[ECHO_BUF_SIZE];</div><div class="line">   </div><div class="line">	<span class="keyword">if</span>(argc &lt; <span class="number">2</span>)&#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"input %s server_address [port]\n"</span>,argv[<span class="number">0</span>]);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125; </div><div class="line">      </div><div class="line">    <span class="keyword">if</span>(argc &gt;<span class="number">2</span>)</div><div class="line">        port = atoi(argv[<span class="number">2</span>]);</div><div class="line">        </div><div class="line">    WSAStartup(MAKEWORD(<span class="number">2</span>,<span class="number">2</span>),&amp;wsa_data);<span class="comment">//初始化winsock资源</span></div><div class="line">    send_len = <span class="built_in">strlen</span>(test_data);</div><div class="line">    </div><div class="line">	<span class="comment">//服务器地址</span></div><div class="line">    serv_addr.sin_family = AF_INET;</div><div class="line">    serv_addr.sin_port = htons(port);</div><div class="line">    serv_addr.sin_addr.s_addr = inet_addr(argv[<span class="number">1</span>]);</div><div class="line">     </div><div class="line">    <span class="keyword">if</span>(serv_addr.sin_addr.s_addr == INADDR_NONE)&#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"[ECHO] invalid address\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;    </div><div class="line">    </div><div class="line">    echo_soc = socket(AF_INET,SOCK_STREAM,<span class="number">0</span>);</div><div class="line">    result = connect(echo_soc,(struct sockaddr *)&amp;serv_addr,<span class="keyword">sizeof</span>(serv_addr));</div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(result == <span class="number">0</span>)&#123;<span class="comment">//连接成功</span></div><div class="line">        result = send(echo_soc,test_data,send_len,<span class="number">0</span>);</div><div class="line">        result = recv(echo_soc,recv_buf,ECHO_BUF_SIZE,<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">     </div><div class="line">    <span class="keyword">if</span>(result &gt; <span class="number">0</span>)&#123;</div><div class="line">        recv_buf[result] = <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"[ECHO Client] receives: \"%s\"\r\n"</span>,recv_buf);</div><div class="line">    &#125;    </div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">printf</span>(<span class="string">"[ECHO Client] error: %d.\"\r\n"</span>,WSAGetLastError());</div><div class="line">        </div><div class="line">    closesocket(echo_soc);</div><div class="line">    WSACleanup();</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>附录：</strong><br>关于socket（套接字）<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> &#123;</span></div><div class="line">        <span class="keyword">union</span> &#123;</div><div class="line">                <span class="class"><span class="keyword">struct</span> &#123;</span> UCHAR s_b1,s_b2,s_b3,s_b4; &#125; S_un_b;</div><div class="line">                <span class="class"><span class="keyword">struct</span> &#123;</span> USHORT s_w1,s_w2; &#125; S_un_w;</div><div class="line">                ULONG S_addr;</div><div class="line">        &#125; S_un;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> s_addr  S_un.S_addr <span class="comment">/* can be used for most tcp &amp; ip code */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> s_host  S_un.S_un_b.s_b2    <span class="comment">// host on imp</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> s_net   S_un.S_un_b.s_b1    <span class="comment">// network</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> s_imp   S_un.S_un_w.s_w2    <span class="comment">// imp</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> s_impno S_un.S_un_b.s_b4    <span class="comment">// imp #</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> s_lh    S_un.S_un_b.s_b3    <span class="comment">// logical host</span></span></div><div class="line">&#125; IN_ADDR, *PIN_ADDR, FAR *LPIN_ADDR;</div><div class="line"></div><div class="line"><span class="comment">//第一个结构体，既</span></div><div class="line"><span class="comment">//struct &#123; UCHAR s_b1,s_b2,s_b3,s_b4; &#125; S_un_b;</span></div><div class="line"><span class="comment">//用于存储ip地址，其中s_b1到s_b4存储的为ip地址的四节</span></div></pre></td></tr></table></figure></p>
+<p>就这么多了=。=</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/01/25/winsock编程（1）——基于tcp的echo/" data-id="cj2t7i30c00106cvn8p8reejp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Code/">Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/">Web</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/07/12/游戏评测1——古墓丽影9（tomb-raider-9）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          游戏评测1——古墓丽影9（Tomb Raider 9）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/10/30/ubuntu下sublime-text-2的安装/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Ubuntu下Sublime Text 2的安装</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CE3/">CE3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-Patterns/">Design-Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Note/">Note</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Review/">Review</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Socket/">Socket</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unix/">Unix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Code/">Code</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Review/">Review</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sublime/">Sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/">Unix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Code/" style="font-size: 18.33px;">Code</a> <a href="/tags/Game/" style="font-size: 20px;">Game</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Review/" style="font-size: 16.67px;">Review</a> <a href="/tags/Software/" style="font-size: 10px;">Software</a> <a href="/tags/Sublime/" style="font-size: 11.67px;">Sublime</a> <a href="/tags/Unix/" style="font-size: 13.33px;">Unix</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/test/" style="font-size: 11.67px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/18/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/15/Unix-Note--errno-define/">Unix Note--errno define</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/20/游戏评测8——Minecraft(简评)/">游戏评测8——Minecraft(简评)</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/04/C++API设计Note/">C++API设计Note</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/01/Unix编程入门2--线程同步/">Unix编程入门2--线程同步</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 StromAI<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

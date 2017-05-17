@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CE3备忘录2--枪械创建 | StromAI&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里简单介绍武器系统中的枪械创建及使用。 由我们自己创建的枪械类一般继承自CWeapon，当然CWeapon是基于接口类IWeapon创建的，不过在CE3枪械的大部分接口都在CWeapon中实现，所以这样的体系是很明智">
+<meta name="keywords" content="Code,Game">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CE3备忘录2--枪械创建">
+<meta property="og:url" content="http://yoursite.com/2014/09/11/CE3备忘录2--枪/index.html">
+<meta property="og:site_name" content="StromAI&#39;s blog">
+<meta property="og:description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里简单介绍武器系统中的枪械创建及使用。 由我们自己创建的枪械类一般继承自CWeapon，当然CWeapon是基于接口类IWeapon创建的，不过在CE3枪械的大部分接口都在CWeapon中实现，所以这样的体系是很明智">
+<meta property="og:updated_time" content="2017-05-17T16:00:15.248Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CE3备忘录2--枪械创建">
+<meta name="twitter:description" content="关于备忘录：这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com  这里简单介绍武器系统中的枪械创建及使用。 由我们自己创建的枪械类一般继承自CWeapon，当然CWeapon是基于接口类IWeapon创建的，不过在CE3枪械的大部分接口都在CWeapon中实现，所以这样的体系是很明智">
+  
+    <link rel="alternate" href="/atom.xml" title="StromAI&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">StromAI&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Don&#39;t worry be happy~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CE3备忘录2--枪" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/09/11/CE3备忘录2--枪/" class="article-date">
+  <time datetime="2014-09-10T19:40:39.000Z" itemprop="datePublished">2014-09-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CE3/">CE3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CE3备忘录2--枪械创建
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关于备忘录：<br>这里主要是自己记录一些CE3(Cryengine3)的常用方法，包括代码编写以及API功能，如果有什么问题感谢指出，这是我的邮箱albstein2@gmail.com</p>
+<hr>
+<p>这里简单介绍武器系统中的枪械创建及使用。</p>
+<p>由我们自己创建的枪械类一般继承自CWeapon，当然CWeapon是基于接口类IWeapon创建的，不过在CE3枪械的大部分接口都在CWeapon中实现，所以这样的体系是很明智的选择（说得好像我很懂的样子Orz）</p>
+<p>同上文这里的环境为windows7 x64下的VS2012</p>
+<p>下面我们以一个基础的枪械来作为例子进行说明：</p>
+<p>为了规范，我们将新建的DemoWeapon.h和DemoWeapon.cpp添加在/CryGameSDK/Item Files/Weapon Files/Weapons下</p>
+<p>之后我们开始武器的编写</p>
+<p>###1.打开DemoWeapon.h编辑如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _DEMOWEAPON_H_</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _DEMOWEAPON_H_</span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Weapon.h"</span></span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDemoWeapon</span> :</span> <span class="keyword">public</span> CWeapon <span class="comment">//从Weapon继承，作为简单的模板这里就不实现其他功能了</span></div><div class="line">&#123;</div><div class="line"><span class="keyword">private</span>:</div><div class="line"></div><div class="line">	<span class="keyword">typedef</span> CWeapon BaseClass;</div><div class="line"> </div><div class="line"><span class="keyword">public</span>:</div><div class="line">	CDemoWeapon();</div><div class="line">	~CDemoWeapon();</div><div class="line"></div><div class="line">	<span class="comment">//在需要的情况下可以在这里通过重写CWeapon的函数来实现特定功能</span></div><div class="line">	<span class="comment">//当然这里不进行介绍，后面有机会的话会有例子Orz</span></div><div class="line">&#125;;</div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<p>###2.编辑DemoWeapon.cpp</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"StdAfx.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"DemoWeapon.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Weapon.h"</span></span></div><div class="line"> </div><div class="line">CDemoWeapon::CDemoWeapon()</div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">CDemoWeapon::~CDemoWeapon()</div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="comment">//这里没什么好说的了就是简单的定义(就好像什么都没有一样）</span></div></pre></td></tr></table></figure>
+<p>###3.注册武器</p>
+<p>当文件编辑完成后我们进行武器的注册，CE3的武器在GameFactory.cpp中注册（找不到的话可以再VS的资源管理器中搜索）</p>
+<p>打开GameFactory.cpp在开头的相应位置（就是武器啥的放到一起比较规范）添加</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;DemoWeapon.h&gt;</span></span></div></pre></td></tr></table></figure>
+<p>之后找到</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">REGISTER_FACTORY(pFramework, <span class="string">"Weapon"</span>, CWeapon, <span class="literal">false</span>);</div><div class="line"><span class="comment">//后面还有很多找到这个就行了</span></div><div class="line"><span class="comment">//在后面添加</span></div><div class="line">REGISTER_FACTORY(pFramework, <span class="string">"DemoWeapon"</span>, CDemoWeapon, <span class="literal">false</span>);</div></pre></td></tr></table></figure>
+<p>这样武器就注册成功了</p>
+<p>###最后找到GameSDK\Scripts\Entities\Items\XML\Weapons并新建DemoWeapon.xml简单起见复制rifle.xml之中的内容找到</p>
+<p><pre><br>    <code><br>        &lt;item name=”Rifle” class=”Weapon” category=”primary” priority=”12” weaponParams=”1”&gt;<br>    </code><br></pre><br>将”Rifle”和”Weapon”都改为”DemoWeapon”<br>再找到</p>
+<p><pre><br>    <code><br>        &lt;param name=”display_name” value=”@mp_eRifle”/&gt;<br>    </code><br></pre><br>将”@mp_eRifle”改为”@mp_eDemoWeapon”</p>
+<p>如果无误的话编译运行程序就可以在编辑器的Item中找到我们注册的”DemoWeapon”,拖到游戏中就可以使用了。</p>
+<p>到这里注册武器的流程就结束了，其他的功能新建或者重写成函数来完成，是武器的功能丰富就靠想象力和API的熟练程度了，这里之后也许会有例子吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/09/11/CE3备忘录2--枪/" data-id="cj2t7i2zs00086cvnf48uwco7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Code/">Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Game/">Game</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/09/11/设计模式学习1--ABSTRACT-FACTORY(抽象工厂)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          设计模式学习1--ABSTRACT FACTORY(抽象工厂)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/09/04/CE3备忘录1--弹头/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CE3备忘录1--弹头创建</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CE3/">CE3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-Patterns/">Design-Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Note/">Note</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Review/">Review</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Socket/">Socket</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unix/">Unix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Code/">Code</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Review/">Review</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sublime/">Sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/">Unix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Code/" style="font-size: 18.33px;">Code</a> <a href="/tags/Game/" style="font-size: 20px;">Game</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Review/" style="font-size: 16.67px;">Review</a> <a href="/tags/Software/" style="font-size: 10px;">Software</a> <a href="/tags/Sublime/" style="font-size: 11.67px;">Sublime</a> <a href="/tags/Unix/" style="font-size: 13.33px;">Unix</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/test/" style="font-size: 11.67px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/18/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/15/Unix-Note--errno-define/">Unix Note--errno define</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/20/游戏评测8——Minecraft(简评)/">游戏评测8——Minecraft(简评)</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/04/C++API设计Note/">C++API设计Note</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/01/Unix编程入门2--线程同步/">Unix编程入门2--线程同步</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 StromAI<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
